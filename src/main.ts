@@ -1,6 +1,7 @@
+import 'dotenv/config';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { HTTPExceptionFilter } from './infra/http-exception.filter';
+import { HTTPExceptionFilter } from './infrastructure/http-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -9,6 +10,6 @@ async function bootstrap() {
   app.useGlobalFilters(new HTTPExceptionFilter(adapterHost));
   const port = process.env.PORT || 3001;
   await app.listen(port);
-  console.log(`Listening API on port: ${port}`)
+  console.log(`Listening API on port: ${port}`);
 }
 bootstrap();
