@@ -1,6 +1,6 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import axios from 'axios';
-import { AI_MAX_TOKENS, AI_TEMPERATURE } from '../../utils/constants';
+import { AI_MAX_TOKENS, AI_TEMPERATURE } from '../../../utils/constants';
 
 @Injectable()
 export class AIAdapter {
@@ -14,13 +14,16 @@ export class AIAdapter {
     this.AI_API_MODEL = process.env.AI_API_MODEL || '';
   }
 
-  async execute(prompt: string) {
+  async execute(prompt: string, agent: string) {
     try {
       const response = await axios.post(
         this.AI_API_URL,
         {
           model: this.AI_API_MODEL,
-          messages: [{ role: 'user', content: prompt }],
+          messages: [
+            { role: 'system', content: agent },
+            { role: 'user', content: prompt }
+          ],
           max_tokens: AI_MAX_TOKENS,
           temperature: AI_TEMPERATURE,
         },

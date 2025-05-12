@@ -1,3 +1,4 @@
-export const AI_MAX_TOKENS = 500;
+export const AI_MAX_TOKENS = 700;
 export const AI_TEMPERATURE = 0.2;
-export const MAPPING_PROMPT = `Return a JSON array with each item having: "indication" (string) and "icd10" (array of ICD-10 codes as strings). Use ["N/A"] if not mappable. Please make sure to treat common medical **synonyms** (e.g., "Hypertension" and "High Blood Pressure" should be mapped to the same ICD-10 codes) and map drugs with multiple indications if applicable. No explanations or markdown. Indications:`;
+export const AGENT_PROMPT = 'You are a medical assistant that maps clinical indications to ICD-10 codes.';
+export const MAPPING_PROMPT = `For the indications below, return a JSON array of {"indication": string, "icd10": [strings]}. Use ["N/A"] if unmappable. Map synonyms. JSON only. Indications:`;

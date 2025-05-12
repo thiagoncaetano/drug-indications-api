@@ -25,7 +25,7 @@ export const DataSourceDevelopmentConfig: DataSourceOptions = {
   password: 'postgres',
   database: 'mapmed',
   entities: [
-    __dirname + '/../infra/models/**/*.model{.ts,.js}'
+    __dirname + '/../infrastructure/models/**/*.model{.ts,.js}'
   ],
   synchronize: false,
   dropSchema: false,

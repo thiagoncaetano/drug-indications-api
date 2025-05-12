@@ -1,22 +1,22 @@
-import { MigrationInterface, QueryRunner, Table, TableOptions } from "typeorm";
+import { MigrationInterface, QueryRunner, Table, TableForeignKey, TableOptions } from "typeorm";
 
-export class DrugsTable1747012411627 implements MigrationInterface {
+export class Icd10codesTable1747016744785 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     const tableProps: TableOptions = {
-      name: "drugs",
+      name: "icd10codes",
       columns: [
-        { name: "id", type: "uuid", isPrimary: true, isNullable: false, generationStrategy: 'uuid' },
-        { name: "name", type: "varchar", isNullable: false },
+        { name: "id", type: "uuid", isPrimary: true, isNullable: false },
+        { name: "code", type: "varchar", isNullable: false },
         { name: "created_at", type: "timestamp", default: "CURRENT_TIMESTAMP", isNullable: true },
         { name: "updated_at", type: "timestamp", default: "CURRENT_TIMESTAMP", isNullable: true },
-      ]
+      ],
     };
 
     await queryRunner.createTable(new Table(tableProps), true);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-      await queryRunner.dropTable("drugs");
+    await queryRunner.dropTable("icd10codes");
   }
 }

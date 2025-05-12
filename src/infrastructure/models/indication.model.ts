@@ -3,11 +3,11 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-  ManyToMany,
-  JoinTable,
+  JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { DrugModel } from './drug.model';
-import { ICD10Code } from './icd10code.model';
+import { IndicationICD10CodeModel } from './indication_icd10code.model';
 
 @Entity('indications')
 export class IndicationModel {
@@ -17,10 +17,13 @@ export class IndicationModel {
   @Column()
   name: string;
 
-  @ManyToOne(() => DrugModel, drug => drug.indications)
+  @Column({ name: "drug_id" })
+  drugId: string;
+
+  @ManyToOne(() => DrugModel, (drug) => drug.indications, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'drug_id' })
   drug: DrugModel;
 
-  @ManyToMany(() => ICD10Code, { cascade: true, eager: true })
-  @JoinTable()
-  icd10Codes: ICD10Code[];
+  @OneToMany(() => IndicationICD10CodeModel, (indicationICD10Code) => indicationICD10Code.indication)
+  indicationICD10Codes: IndicationICD10CodeModel[];
 }
