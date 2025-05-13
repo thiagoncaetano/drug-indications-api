@@ -48,17 +48,17 @@ This API provides endpoints for managing users, authentication, and drug indicat
 ### Routes
 
 #### 1. Create User (Authentication: Not Required)
-```http
+```
   POST /api/users
 ```
 
 #### 2. Login (Authentication: Not Required)
-```http
+```
   POST /api/auth/login
 ```
 
 #### 3. Scrape and Map Indications (Authentication: Required (Bearer Token))
-```http
+```
   GET /api/scraping?drug=dupixent
 
   Query Parameters
@@ -66,13 +66,13 @@ This API provides endpoints for managing users, authentication, and drug indicat
 ```
 
 #### 4. Create Indication (Authentication: Required (Bearer Token))
-```http
+```
   POST /api/indications
 ```
 
 
 #### 5. Get Indications (Authentication: Required (Bearer Token))
-```http
+```
   GET /api/indications?indicationId={indicationId}&drugId={drugId}&code={code}
 
   Query Parameters:
@@ -82,27 +82,27 @@ This API provides endpoints for managing users, authentication, and drug indicat
 ```
 
 #### 6. Get Indication (Authentication: Required (Bearer Token))
-```http
+```
   GET /api/indications/{indicationId}
 ```
 
 #### 7. Update Indication (Authentication: Required (Bearer Token))
-```http
+```
   PUT /api/indications/{indicationId}
 ```
 
 #### 8. Delete Indication (Authentication: Required (Bearer Token))
-```http
+```
   DELETE /api/indications/{indicationId}
 ```
 
 #### 9. Logout (Authentication: Required (Bearer Token))
-```http
+```
   POST /api/auth/logout
 ```
 
 #### 10. Logout (Authentication: Required (Bearer Token))
-```http
+```
   POST /api/health
 ```
 
