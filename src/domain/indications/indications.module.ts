@@ -10,6 +10,7 @@ import { IndicationsRepository } from '../../infrastructure/repositories/indicat
 import { DrugsRepository } from '../../infrastructure/repositories/drugs.repository';
 import { ICD10CodeRepository } from '../../infrastructure/repositories/icd10code.repository';
 import { IndicationsICD10CodeRepository } from '../../infrastructure/repositories/indications_icd10code.repository';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { IndicationsICD10CodeRepository } from '../../infrastructure/repositorie
       ICD10CodeModel,
       IndicationICD10CodeModel,
     ]),
+    AuthModule
   ],
   controllers: [IndicationsController],
   providers: [

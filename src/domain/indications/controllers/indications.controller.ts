@@ -1,14 +1,15 @@
-import { Controller, Get, Query, Post, Body, Param, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Query, Post, Body, Param, Put, Delete, UseGuards } from '@nestjs/common';
 import { IndicationsService } from '../services/indications.service';
 import { CreateIndicationDTO, QueryIndicationsDTO, UpdateIndicationDTO } from '../dto/indications.dto';
+import { AuthGuard } from '../../../guards/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('indications')
 export class IndicationsController {
   constructor(
     private readonly indicationsService: IndicationsService
   ) {}
 
-  //NAO ESQUECER DE AUTENTICAR
   @Post()
   async create(
     @Body() data: CreateIndicationDTO

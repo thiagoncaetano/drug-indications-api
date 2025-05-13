@@ -1,6 +1,8 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { ScrapingService } from '../services/scraping.service';
+import { AuthGuard } from '../../../guards/auth.guard';
 
+@UseGuards(AuthGuard)
 @Controller('scraping')
 export class ScrapingController {
    constructor(

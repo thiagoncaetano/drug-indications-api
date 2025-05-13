@@ -18,5 +18,6 @@ import { SessionModel } from '../../infrastructure/models/session.model';
   ],
   controllers: [AuthController],
   providers: [AuthService],
+  exports: [AuthService]
 })
 export class AuthModule {}
