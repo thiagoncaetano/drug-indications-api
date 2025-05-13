@@ -10,7 +10,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe())
   const adapterHost = app.get(HttpAdapterHost);
   app.useGlobalFilters(new HTTPExceptionFilter(adapterHost));
-  const port = process.env.PORT || 3001;
+  const port = process.env.PORT || 3002;
   await app.listen(port);
   console.log(`Listening API on port: ${port}`);
 }
