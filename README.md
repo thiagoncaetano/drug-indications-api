@@ -1,98 +1,335 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>DRUG-INDICATION-API</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #1e1e1e;
+        color: #e0e0e0;
+      }
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+      h1,
+      h2,
+      h3,
+      h4 {
+        color: #e0e0e0;
+      }
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+      h2 {
+        text-align: center;
+        margin-top: 20px;
+      }
 
-## Description
+      p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin: 10px 0;
+      }
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+      a {
+        color: #8ab4f8;
+        text-decoration: none;
+      }
 
-## Project setup
+      a:hover {
+        text-decoration: underline;
+      }
 
-```bash
-$ yarn install
-```
+      .container {
+        width: 80%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
 
-## Compile and run the project
+      .steps,
+      .api-docs {
+        background-color: #2c2c2c;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        padding: 20px;
+        margin-bottom: 40px;
+      }
 
-```bash
-# development
-$ yarn run start
+      .steps h3,
+      .api-docs h3 {
+        color: #8ab4f8;
+      }
 
-# watch mode
-$ yarn run start:dev
+      ol {
+        margin-left: 20px;
+      }
 
-# production mode
-$ yarn run start:prod
-```
+      li {
+        margin-bottom: 15px;
+      }
 
-## Run tests
+      code {
+        background-color: #1e1e1e;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 1rem;
+        color: #b3b3b3;
+        border: 1px solid #3c3c3c;
+      }
 
-```bash
-# unit tests
-$ yarn run test
+      pre {
+        background-color: #1e1e1e;
+        color: #e0e0e0;
+        padding: 10px;
+        border-radius: 8px;
+        overflow-x: auto;
+      }
 
-# e2e tests
-$ yarn run test:e2e
+      pre code {
+        white-space: pre-wrap;
+      }
 
-# test coverage
-$ yarn run test:cov
-```
+      .badge {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+      }
 
-## Deployment
+      .badge img {
+        max-width: 100%;
+        height: auto;
+      }
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+      .note {
+        background-color: #3a3a3a;
+        color: #ffd700;
+        padding: 10px;
+        border-radius: 8px;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+  <body>
+    <div class="container">
+      <p class="badge">
+        <a href="https://github.com/your-repository-url" target="_blank">
+          <img
+            src="https://img.shields.io/badge/Project-DRUG--INDICATION--API-blue"
+            alt="Project Badge"
+          />
+        </a>
+      </p>
 
-```bash
-$ yarn install -g @nestjs/mau
-$ mau deploy
-```
+      <h2>DRUG-INDICATION-API</h2>
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+      <div class="steps">
+        <h3>Step-by-Step Setup for Running the Project</h3>
+        <p>Follow these steps to set up and run the project locally:</p>
 
-## Resources
+        <ol>
+          <li>
+            <strong>Clone the repository</strong>: Clone the repository to your
+            local environment:
+            <pre><code>git clone git@github.com:thiagoncaetano/drug-indications-api.git</code></pre>
+          </li>
+          <li>
+            <strong>Install Docker</strong>: Ensure that Docker is installed on
+            your system. If not, download and install Docker Desktop from
+            <a
+              href="https://www.docker.com/products/docker-desktop"
+              target="_blank"
+              >here</a
+            >. You can follow the
+            <a href="https://docs.docker.com/get-docker/" target="_blank"
+              >installation guide</a
+            >
+            if necessary.
+          </li>
+          <li>
+            <strong>Configure environment variables</strong>:
+            <div
+              style="
+                background-color: #2e2e2e;
+                padding: 20px;
+                border-radius: 8px;
+                margin-top: 15px;
+              "
+            >
+              <p style="color: white; font-size: 16px; margin-bottom: 15px">
+                Create a <code>.env</code> file in the root folder and paste the
+                following:
+              </p>
+              <ul style="color: white; line-height: 1.6">
+                <li>NODE_ENV=production</li>
+                <li>PORT=3001</li>
+                <li>GLOBAL_PREFIX='api'</li>
+                <li>JTW_SECRET=o0kB9ZmOFi</li>
 
-Check out a few resources that may come in handy when working with NestJS:
+                <li>POSTGRES_HOST=postgres</li>
+                <li>POSTGRES_USER=postgres</li>
+                <li>POSTGRES_PASSWORD=postgres</li>
+                <li>POSTGRES_DB=mapmed</li>
+                <li>POSTGRES_PORT=5432</li>
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+                <li>
+                  DRUG_INDICATIONS_URL='https://dailymed.nlm.nih.gov/dailymed/search.cfm'
+                </li>
 
-## Support
+                <li>
+                  AI_API_URL="https://api.together.xyz/v1/chat/completions"
+                </li>
+                <li>
+                  AI_API_KEY=tgp_v1__8N2mWG-RTK5Rz51_id_i9jcur2f1cK6TNs43ruCf5k
+                </li>
+                <li>
+                  AI_API_MODEL="meta-llama/Llama-3.3-70B-Instruct-Turbo-Free"
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <strong>Start the Docker containers</strong>: Navigate to the root
+            directory of the project and run the following command to build and
+            start the necessary containers:
+            <pre><code>docker-compose up</code></pre>
+          </li>
+          <li>
+            <strong>Import the Postman Collection</strong>: The Postman
+            collection will be sent to you via email. Import it into
+            <a href="https://www.postman.com/downloads/" target="_blank"
+              >Postman</a
+            >
+            to test the API.
+          </li>
+          <li>
+            <strong>Execute the API requests</strong>: Once the Postman
+            collection is imported, follow the instructions within the
+            collection to execute the API requests and interact with the
+            application.
+          </li>
+        </ol>
+      </div>
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+      <div class="api-docs">
+        <h3>API Documentation</h3>
+        <p>
+          This API provides endpoints for managing users, authentication, and
+          drug indications with ICD-10 code mapping.
+        </p>
 
-## Stay in touch
+        <h4>Routes</h4>
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+        <p><strong>1. Create User</strong></p>
+        <pre><code>POST /api/users</code></pre>
+        <p><strong>Authentication:</strong> Not Required</p>
 
-## License
+        <p><strong>2. Login</strong></p>
+        <pre><code>POST /api/auth/login</code></pre>
+        <p><strong>Authentication:</strong> Not Required</p>
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+        <p><strong>3. Scrape and Map Indications</strong></p>
+        <pre><code>GET /api/scraping?drug=dupixent</code></pre>
+        <p><strong>Authentication:</strong> Required (Bearer Token)</p>
+        <p><strong>Query Parameters:</strong></p>
+        <ul>
+          <li>
+            <strong>drug</strong>: The drug name to scrape information for.
+          </li>
+        </ul>
+
+        <p><strong>4. Create Indication</strong></p>
+        <pre><code>POST /api/indications</code></pre>
+        <p><strong>Authentication:</strong> Required (Bearer Token)</p>
+
+        <p><strong>5. Get Indications</strong></p>
+        <pre><code>GET /api/indications?indicationId={indicationId}&drugId={drugId}&code={code}</code></pre>
+        <p><strong>Authentication:</strong> Required (Bearer Token)</p>
+        <p><strong>Query Parameters:</strong></p>
+        <ul>
+          <li>
+            <strong>indicationId</strong> (optional): The ID of the indication.
+          </li>
+          <li><strong>drugId</strong> (optional): The ID of the drug.</li>
+          <li>
+            <strong>code</strong> (optional): The ICD-10 code associated with
+            the indication.
+          </li>
+        </ul>
+
+        <p><strong>6. Get Indication</strong></p>
+        <pre><code>GET /api/indications/{indicationId}</code></pre>
+        <p><strong>Authentication:</strong> Required (Bearer Token)</p>
+
+        <p><strong>7. Update Indication</strong></p>
+        <pre><code>PUT /api/indications/{indicationId}</code></pre>
+        <p><strong>Authentication:</strong> Required (Bearer Token)</p>
+
+        <p><strong>8. Delete Indication</strong></p>
+        <pre><code>DELETE /api/indications/{indicationId}</code></pre>
+        <p><strong>Authentication:</strong> Required (Bearer Token)</p>
+
+        <p><strong>9. Logout</strong></p>
+        <pre><code>POST /api/auth/logout</code></pre>
+        <p><strong>Authentication:</strong> Required (Bearer Token)</p>
+
+        <p><strong>10. Health</strong></p>
+        <pre><code>POST /api/health</code></pre>
+        <p><strong>Authentication:</strong> Not Required</p>
+      </div>
+
+      <div class="api-docs">
+        <h3>Potential Improvements & Production Challenges</h3>
+
+        <h4>Potential Improvements</h4>
+        <ul>
+          <li>
+            Better ICD-10 AI: Use a more accurate model with confidence scoring.
+          </li>
+          <li>
+            Async processing: Run scraping and mapping in background jobs.
+          </li>
+          <li>
+            Filters & pagination: Add filters and pagination to improve
+            scalability.
+          </li>
+        </ul>
+
+        <h4>Production Challenges</h4>
+        <ul>
+          <li>
+            Site structure changes: DailyMed's layout may change and break
+            scraping.
+          </li>
+          <li>
+            ICD-10 accuracy: One indication may match multiple valid codes.
+          </li>
+          <li>
+            Rate limiting: External APIs like OpenAI may enforce usage limits.
+          </li>
+        </ul>
+      </div>
+
+      <div class="api-docs">
+        <h3>
+          <em
+            >How would you lead an engineering team to implement and maintain
+            this project?</em
+          >
+        </h3>
+        <p>
+          I would guide the team with a focus on collaboration, code quality,
+          and knowledge sharing. We'd use clear guidelines, automated tests, and
+          regular syncs to ensure stability and progress. Prioritizing
+          maintainability and documentation would be key to long-term success.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
