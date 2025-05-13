@@ -2,7 +2,7 @@ import { Injectable, BadRequestException } from '@nestjs/common';
 import { CreateUserDTO } from '../dto/users.dto';
 import { UsersRepository } from '../../../infrastructure/repositories/users.repository';
 import { UserModel } from '../../../infrastructure/models/user.model';
-import { randomUUID, randomBytes, scryptSync } from 'crypto';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class UsersService {

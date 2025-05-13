@@ -1,4 +1,4 @@
-import { HttpException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDTO } from '../dto/auth.dto';
 import { InjectRepository } from '@nestjs/typeorm';

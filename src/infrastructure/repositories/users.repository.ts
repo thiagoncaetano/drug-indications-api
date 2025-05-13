@@ -24,6 +24,14 @@ export class UsersRepository {
     return await this.usersRepo.findOneBy({ id });
   }
 
+  async findByEmailAndPassword(email: string, password: string): Promise<UserModel | null> {
+    return await this.usersRepo.findOneBy({ email, encryptedPassword: password });
+  }
+
+  async findByEmail(email: string): Promise<UserModel | null> {
+    return await this.usersRepo.findOneBy({ email });
+  }
+
   async update(id: string, data: Partial<UserModel>): Promise<UserModel|null> {
     await this.usersRepo.update(id, data);
     return this.findById(id);
@@ -33,11 +41,4 @@ export class UsersRepository {
     await this.usersRepo.delete(id);
   }
 
-  async findByEmailAndPassword(email: string, password: string): Promise<UserModel | null> {
-    return await this.usersRepo.findOneBy({ email, encryptedPassword: password });
-  }
-
-  async findByEmail(email: string): Promise<UserModel | null> {
-    return await this.usersRepo.findOneBy({ email });
-  }
 }
