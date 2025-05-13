@@ -21,12 +21,4 @@ export class AuthController {
   ) {
     return await this.authService.logout(req.session.id);
   }
-
-  @UseGuards(AuthGuard)
-  @Post('teste')
-  async teste(
-    @Body() data: any
-  ) {
-    return {ok: "ok"};
-  }
 }

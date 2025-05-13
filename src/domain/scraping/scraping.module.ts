@@ -1,11 +1,15 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { IndicationsController } from './controllers/indications.controller';
-import { IndicationsService } from './services/indications.service';
 import { IndicationModel } from '../../infrastructure/models/indication.model';
 import { DrugModel } from '../../infrastructure/models/drug.model';
 import { ICD10CodeModel } from '../../infrastructure/models/icd10code.model';
 import { IndicationICD10CodeModel } from '../../infrastructure/models/indication_icd10code.model';
+import { IndicationsController } from '../indications/controllers/indications.controller';
+import { ScrapingController } from './controllers/scraping.controller';
+import { ScrapingService } from './services/scraping.service';
+import { ScrapingAdapter } from '../../infrastructure/adapters/scraping/scraping.service';
+import { AIAdapter } from '../../infrastructure/adapters/ai/ai.adapter';
+import { AIMappingService } from '../AIMapping/services/ai-mapping.service';
 import { IndicationsRepository } from '../../infrastructure/repositories/indications.repository';
 import { DrugsRepository } from '../../infrastructure/repositories/drugs.repository';
 import { ICD10CodeRepository } from '../../infrastructure/repositories/icd10code.repository';
@@ -20,14 +24,16 @@ import { IndicationsICD10CodeRepository } from '../../infrastructure/repositorie
       IndicationICD10CodeModel,
     ]),
   ],
-  controllers: [IndicationsController],
+  controllers: [ScrapingController],
   providers: [
-    IndicationsService,
+    ScrapingService,
+    ScrapingAdapter,
+    AIAdapter,
+    AIMappingService,
     IndicationsRepository,
     DrugsRepository,
     ICD10CodeRepository,
     IndicationsICD10CodeRepository,
   ],
-  exports: [IndicationsService],
 })
-export class IndicationsModule {}
+export class ScrapingModule {}

@@ -12,7 +12,7 @@ export class DrugsRepository {
   ) {}
 
   async save(drug: DrugModel): Promise<DrugModel> {
-    drug.id = randomUUID();
+    if (!drug.id) drug.id = randomUUID();
     return await this.drugsRepo.save(drug);
   }
 

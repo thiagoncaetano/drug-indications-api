@@ -1,74 +1,89 @@
-import { HttpException, Injectable } from "@nestjs/common";
-import { ScrapingAdapter } from "../../../infrastructure/adapters/scraping/scraping.service";
-import { AIMappingService, MappedIndication } from "../../AIMapping/services/ai-mapping.service";
-import { IndicationsRepository } from "../../../infrastructure/repositories/indications.repository";
-import { DrugModel } from "../../../infrastructure/models/drug.model";
+import { Injectable, NotFoundException, UnprocessableEntityException } from "@nestjs/common";
+import { CreateIndicationDTO, QueryIndicationsDTO, UpdateIndicationDTO } from "../dto/indications.dto";
 import { DrugsRepository } from "../../../infrastructure/repositories/drugs.repository";
+import { IndicationsRepository } from "../../../infrastructure/repositories/indications.repository";
 import { ICD10CodeRepository } from "../../../infrastructure/repositories/icd10code.repository";
 import { IndicationsICD10CodeRepository } from "../../../infrastructure/repositories/indications_icd10code.repository";
+import { IndicationModel } from "../../../infrastructure/models/indication.model";
+import { IndicationICD10CodeModel } from "../../../infrastructure/models/indication_icd10code.model";
 
 @Injectable()
 export class IndicationsService {
   constructor(
-    private readonly scrapingAdapter: ScrapingAdapter,
-    private readonly aiMappingService: AIMappingService,
     private readonly drugsRepository: DrugsRepository,
     private readonly indicationsRepository: IndicationsRepository,
     private readonly icd10codeRepository: ICD10CodeRepository,
     private readonly indicationsICD10codeRepository: IndicationsICD10CodeRepository,
   ) {}
 
-  async extractAndMapIndications(drugName: string) {
-    try {
-      const existingIndications = await this.indicationsRepository.findByDrugName(drugName);
-      if(existingIndications.length) return existingIndications;
+  async create(data: CreateIndicationDTO): Promise<IndicationModel> {
+    const existingIndication = await this.indicationsRepository.findByName(data.indication);
+    if(existingIndication) throw new UnprocessableEntityException("Indication already registered");
+    
+    const drug = await this.drugsRepository.findByNameOrCreate(data.drugName);
 
-      const indications = await this.scrapingAdapter.extractIndicationsFromSetId(drugName);
-      const mappedIndications: MappedIndication[] = await this.aiMappingService.mapIndicationsToICD10(indications);
-      
-      const drug = await this.drugsRepository.findByNameOrCreate(drugName);
+    const indication = new IndicationModel();
+    indication.drug = drug;
+    indication.name = data.indication;
 
-      const newIndications = await this.createAndRelateIndicationsAndICD10Code(mappedIndications, drug);
+    const persistedIndication = await this.indicationsRepository.save(indication);
 
-      return newIndications;
-    } catch (error) {
-      throw new HttpException(error.message, error.status)
+    const persistedCodes = await this.icd10codeRepository.findOrCreateAllByCodes(data.icd10Codes);
+
+    let associations: IndicationICD10CodeModel[] = [];
+
+    for(const code of persistedCodes){
+      const association = new IndicationICD10CodeModel();
+      association.indicationId = persistedIndication.id;
+      association.icd10CodeId = code.id;
+      associations.push(association);
     }
+
+    await this.indicationsICD10codeRepository.bulkSave(associations);
+
+    return persistedIndication;
   }
 
-  async createAndRelateIndicationsAndICD10Code(mappedIndications: MappedIndication[], drug: DrugModel) {
-    const indicationsNames = mappedIndications.map((i) => i.indication);
-    const persistedIndications = await this.indicationsRepository.findOrCreateAllByNames(indicationsNames, drug.id);
+  async findAll(query: QueryIndicationsDTO): Promise<IndicationModel[]> {
+    return await this.indicationsRepository.findAll(query);
+  }
 
-    const codes = [...new Set(mappedIndications.flatMap((item) => item.icd10.map((icd10) => icd10)))];
-    const persistedICD10 = await this.icd10codeRepository.findOrCreateAllByCodes(codes);
+  async update(id: string, data: UpdateIndicationDTO): Promise<IndicationModel> {
+    const indication = await this.indicationsRepository.findById(id);
+    if(!indication) throw new NotFoundException("Indication not found");
+    
+    if(data.name) indication.name = data.name;
+    
+    if(data.drug){
+      const drug = await this.drugsRepository.findById(data.drug.id);
+      if(!drug) throw new NotFoundException("Drug not found");
+      drug.name = data.drug.drugName;
+      await this.drugsRepository.save(drug);
+    }
 
-    const icd10Map = new Map(persistedICD10.map((icd) => [icd.code, icd.id]));
+    if (data.icd10Codes && data.icd10Codes.length > 0) {
+      for (const code of data.icd10Codes) {
+        const icd10Code = await this.icd10codeRepository.findById(code.id);
+        if (!icd10Code) throw new NotFoundException(`ICD-10 Code ${code.icd10} not found`);
+        icd10Code.code = code.icd10;
 
-    const indicationICD10Associations: { indicationId: string, icd10CodeId: string }[] = [];
-    const uniqueAssociations = new Set<string>();
-
-    for (const indication of persistedIndications) {
-      const relatedICD10Codes = mappedIndications.find((m) => m.indication === indication.name)?.icd10;
-
-      if (relatedICD10Codes) {
-        for (const icd10 of relatedICD10Codes) {
-          const icd10RecordId = icd10Map.get(icd10);
-          if (icd10RecordId) {
-            const combinationKey = `${indication.id}-${icd10RecordId}`;
-            if (!uniqueAssociations.has(combinationKey)) {
-              uniqueAssociations.add(combinationKey);
-              indicationICD10Associations.push({
-                indicationId: indication.id,
-                icd10CodeId: icd10RecordId,
-              });
-            }
-          }
-        }
+        await this.icd10codeRepository.save(icd10Code);
       }
     }
 
-    await this.indicationsICD10codeRepository.saveBulk(indicationICD10Associations);
-    return persistedIndications;
+    await this.indicationsRepository.save(indication);
+
+    return indication;
+  }
+
+  async delete(id: string): Promise<{ message: string }> {
+    const indication = await this.indicationsRepository.findById(id);
+    if(!indication) throw new NotFoundException("Indication not found");
+
+    await this.indicationsICD10codeRepository.deleteByIndicationId(id);
+
+    await this.indicationsRepository.delete(id)
+
+    return { message: "Indication successfully deleted." };
   }
 }

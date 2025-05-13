@@ -10,7 +10,11 @@ export class IndicationsICD10CodeRepository {
     private readonly indicationICD10CodeRepo: Repository<IndicationICD10CodeModel>,
   ) {}
 
-  async saveBulk(associations: { indicationId: string, icd10CodeId: string }[]): Promise<IndicationICD10CodeModel[]> {
+  async bulkSave(associations: { indicationId: string, icd10CodeId: string }[]): Promise<IndicationICD10CodeModel[]> {
     return await this.indicationICD10CodeRepo.save(associations);
+  }
+
+  async deleteByIndicationId(indicationId: string): Promise<void> {
+    await this.indicationICD10CodeRepo.delete({ indicationId });
   }
 }

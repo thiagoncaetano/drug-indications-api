@@ -12,7 +12,6 @@ export class ICD10CodeRepository {
   ) {}
 
   async save(icd10Code: ICD10CodeModel): Promise<ICD10CodeModel> {
-    icd10Code.id = randomUUID();
     return await this.icd10CodeRepo.save(icd10Code);
   }
 
@@ -23,8 +22,12 @@ export class ICD10CodeRepository {
     return await this.icd10CodeRepo.save(icd10Codes);
   }
 
-  async findByCode(code: string): Promise<ICD10CodeModel | null> {
+  async findByCode(code: string): Promise<ICD10CodeModel|null> {
     return await this.icd10CodeRepo.findOne({ where: { code } });
+  }
+
+  async findById(id: string): Promise<ICD10CodeModel|null> {
+    return await this.icd10CodeRepo.findOneBy({ id });
   }
 
   async findAllByCodes(codes: string[]): Promise<ICD10CodeModel[]> {

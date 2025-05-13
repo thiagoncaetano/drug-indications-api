@@ -3,6 +3,7 @@ import { IndicationModel } from '../models/indication.model';
 import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { InjectRepository } from '@nestjs/typeorm';
+import { QueryIndicationsDTO } from '../../domain/indications/dto/indications.dto';
 
 @Injectable()
 export class IndicationsRepository {
@@ -10,6 +11,11 @@ export class IndicationsRepository {
     @InjectRepository(IndicationModel)
     private readonly indicationsRepo: Repository<IndicationModel>,
   ) {}
+
+  async save(indication: IndicationModel): Promise<IndicationModel> {
+    if (!indication.id)indication.id = randomUUID()
+    return await this.indicationsRepo.save(indication);
+  }
 
   async bulkSave(indications: IndicationModel[]): Promise<IndicationModel[]> {
     for (const indication of indications) {
@@ -56,5 +62,38 @@ export class IndicationsRepository {
       .getMany();
 
     return indications;
+  }
+
+  async findByName(indication: string): Promise<IndicationModel|null> {
+    return await this.indicationsRepo.findOneBy({ name: indication })
+  }
+
+  async findById(id: string): Promise<IndicationModel|null> {
+    return await this.indicationsRepo.findOneBy({ id })
+  }
+
+  async findAll(query: QueryIndicationsDTO): Promise<IndicationModel[]> {
+      const qr = this.indicationsRepo.createQueryBuilder('indications');
+      qr.innerJoinAndSelect('indications.drug', 'drug');
+      qr.innerJoinAndSelect('indications.indicationICD10Codes', 'ic');
+      qr.innerJoinAndSelect('ic.icd10Code', 'icd10Code');
+
+      if (query.indicationId) {
+        qr.andWhere('indications.id = :id', { id: query.indicationId });
+      }
+
+      if (query.drugId) {
+        qr.andWhere('drug.id = :drugId', { drugId: query.drugId });
+      }
+
+      if (query.icd10code) {
+        qr.andWhere('icd10Code.code = :icd10Code', { icd10Code: query.icd10code });
+      }
+
+      return qr.getMany();
+  }
+
+  async delete(id: string): Promise<void> {
+    await this.indicationsRepo.delete(id)
   }
 }

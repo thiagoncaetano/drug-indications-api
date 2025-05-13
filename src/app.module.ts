@@ -8,6 +8,7 @@ import { AIMappingModule } from './domain/AIMapping/AIMapping.module';
 import { UsersModule } from './domain/users/users.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ScrapingModule } from './domain/scraping/scraping.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { AppService } from './app.service';
     IndicationsModule,
     AIMappingModule,
     UsersModule,
+    ScrapingModule,
   ],
   controllers: [AppController],
   providers: [AppService],
