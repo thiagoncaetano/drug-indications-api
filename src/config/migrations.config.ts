@@ -9,6 +9,5 @@ const datasource = new DataSource({
       : 'src/migrations/*.ts',
   ],
 });
-console.log("Entidades registradas: ", datasource.entityMetadatas);
 datasource.initialize();
 export default datasource;
