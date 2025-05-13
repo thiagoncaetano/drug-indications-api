@@ -20,7 +20,7 @@ export class HTTPExceptionFilter implements ExceptionFilter {
 
     const responseBody: ResponseBody = {
       code: httpStatus,
-      message: exception instanceof HttpException ? exception.message : 'Internal server error',
+      message: this.formatMessage(exception),
     };
 
     if (!(exception instanceof HttpException)) {
@@ -28,5 +28,12 @@ export class HTTPExceptionFilter implements ExceptionFilter {
     }
 
     httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus);
+  }
+
+  private formatMessage(exception: any): string {
+    if (exception?.response?.message && Array.isArray(exception?.response?.message)) {
+      return exception.response.message.join(', ');
+    }
+    return exception?.message || 'Internal server error';
   }
 }
