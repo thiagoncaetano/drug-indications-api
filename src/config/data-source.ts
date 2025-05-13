@@ -9,7 +9,7 @@ export const DataSourceProductionConfig: DataSourceOptions = {
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DB,
   entities: [
-    __dirname + '/../infra/models/**/*.model{.ts,.js}'
+    __dirname + '/../infrastructure/models/**/*.model{.ts,.js}'
   ],
   synchronize: false,
   dropSchema: false,

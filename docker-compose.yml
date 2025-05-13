@@ -17,6 +17,17 @@ services:
         POSTGRES_DB: ${POSTGRES_DB}
     env_file:
       - .env
+    command: >
+      sh -c "
+        echo 'Waiting for database to be available...' &&
+        until nc -z postgres 5432; do
+          sleep 3;
+        done &&
+        echo 'Database available. Running migrations...' &&
+        npm run migration:docker:run &&
+        echo 'Initializind app...' &&
+        npm start
+      "
 
   postgres:
     image: postgres:15-alpine

@@ -3,7 +3,12 @@ import { DefaultSourceConfig } from "./data-source";
 
 const datasource = new DataSource({
   ...DefaultSourceConfig,
-  migrations: ['migrations/*.ts']
+    migrations: [
+    process.env.NODE_ENV === 'production' 
+      ? 'dist/migrations/*.js'
+      : 'src/migrations/*.ts',
+  ],
 });
+console.log("Entidades registradas: ", datasource.entityMetadatas);
 datasource.initialize();
 export default datasource;
