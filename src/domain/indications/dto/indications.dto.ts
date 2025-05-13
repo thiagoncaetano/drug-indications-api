@@ -58,6 +58,6 @@ export class QueryIndicationsDTO {
 
   @IsOptional()
   @IsString()
-  icd10code: string;
+  icd10code?: string;
 }
 

@@ -7,7 +7,7 @@ import { IndicationICD10CodeModel } from '../../infrastructure/models/indication
 import { IndicationsController } from '../indications/controllers/indications.controller';
 import { ScrapingController } from './controllers/scraping.controller';
 import { ScrapingService } from './services/scraping.service';
-import { ScrapingAdapter } from '../../infrastructure/adapters/scraping/scraping.service';
+import { ScrapingAdapter } from '../../infrastructure/adapters/scraping/scraping.adapter';
 import { AIAdapter } from '../../infrastructure/adapters/ai/ai.adapter';
 import { AIMappingService } from '../AIMapping/services/ai-mapping.service';
 import { IndicationsRepository } from '../../infrastructure/repositories/indications.repository';

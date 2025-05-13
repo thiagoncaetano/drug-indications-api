@@ -1,17 +1,17 @@
 version: '3.8'
 
 services:
-  # app:
-  #   build:
-  #     context: .
-  #     target: production
-  #   ports:
-  #     - "3001:3001"
-  #   depends_on:
-  #     - postgres
-  #   environment:
-  #     DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
-  #     NODE_ENV: ${NODE_ENV}
+  app:
+    build:
+      context: .
+      target: production
+    ports:
+      - "3001:3001"
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      NODE_ENV: ${NODE_ENV}
 
   postgres:
     image: postgres:15-alpine

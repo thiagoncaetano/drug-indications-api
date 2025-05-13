@@ -1,5 +1,5 @@
 import { HttpException, Injectable } from '@nestjs/common';
-import { ScrapingAdapter } from '../../../infrastructure/adapters/scraping/scraping.service';
+import { ScrapingAdapter } from '../../../infrastructure/adapters/scraping/scraping.adapter';
 import { AIMappingService, MappedIndication } from '../../AIMapping/services/ai-mapping.service';
 import { DrugsRepository } from '../../../infrastructure/repositories/drugs.repository';
 import { IndicationsRepository } from '../../../infrastructure/repositories/indications.repository';
