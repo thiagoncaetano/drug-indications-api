@@ -16,19 +16,19 @@ Follow these steps to set up and run the project locally:
 
 **3. Configure environment variables:** Create a ```.env``` file in the root folder and paste the following:
 ```
-NODE_ENV=production
-PORT=3001
+NODE_ENV=
+PORT=
 GLOBAL_PREFIX='api'
-JTW_SECRET=o0kB9ZmOFi
-POSTGRES_HOST=postgres
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=postgres
-POSTGRES_DB=mapmed
-POSTGRES_PORT=5432
-DRUG_INDICATIONS_URL='https://dailymed.nlm.nih.gov/dailymed/search.cfm'
-AI_API_URL="https://api.together.xyz/v1/chat/completions"
-AI_API_KEY=tgp_v1__8N2mWG-RTK5Rz51_id_i9jcur2f1cK6TNs43ruCf5k
-AI_API_MODEL="meta-llama/Llama-3.3-70B-Instruct-Turbo-Free"
+JTW_SECRET=
+POSTGRES_HOST=
+POSTGRES_USER=
+POSTGRES_PASSWORD=
+POSTGRES_DB=
+POSTGRES_PORT=
+DRUG_INDICATIONS_URL=
+AI_API_URL=
+AI_API_KEY=
+AI_API_MODEL=
 ```
 
 **4. Start the Docker containers:** : Navigate to the root directory of the project and run the following command to build and start the necessary containers:
